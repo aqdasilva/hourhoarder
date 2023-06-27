@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/system';
+import { Menu, MenuItem } from '@mui/material';
 
 const Container = styled('div')({
   width: '100vw',
@@ -55,17 +56,36 @@ const GradientSquare = () => {
   const currentMonth = currentDate.getMonth();
   const daysInMonth = getDaysInMonth(currentYear, currentMonth);
 
+  const [anchorEl, setAnchorEl] = useState(null); // State for managing the anchor element of the menu
+
+  const handleSquareClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Container>
       <GradientBackground />
-      <Square>
+      <Square onClick={handleSquareClick}>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          getContentAnchorEl={null}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <MenuItem onClick={handleClose}>Option 1</MenuItem>
+          <MenuItem onClick={handleClose}>Option 2</MenuItem>
+          <MenuItem onClick={handleClose}>Option 3</MenuItem>
+        </Menu>
         <Calendar>
-          {/* Render the weekdays */}
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
             <Day key={day}>{day}</Day>
           ))}
-
-          {/* Render the days of the month */}
           {Array.from({ length: daysInMonth }).map((_, index) => (
             <Day key={index + 7}>{index + 1}</Day>
           ))}
@@ -74,6 +94,13 @@ const GradientSquare = () => {
     </Container>
   );
 };
+
+
+const PopUpMenu = () => {
+  // Your pop-up menu component implementation goes here
+  return <div>Pop-up Menu</div>;
+};
+
 
 const Main = () => {
   return (
