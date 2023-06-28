@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/system';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Popover, Typography } from '@mui/material';
 
 const Container = styled('div')({
   width: '100vw',
@@ -66,41 +66,78 @@ const GradientSquare = () => {
     setAnchorEl(null);
   };
 
-  return (
-    <Container>
-      <GradientBackground />
-      <Square onClick={handleSquareClick}>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          getContentAnchorEl={null}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+//   return (
+//     <Container>
+//       <GradientBackground />
+//       <Square onClick={handleSquareClick}>
+//         <Menu
+//           anchorEl={anchorEl}
+//           open={Boolean(anchorEl)}
+//           onClose={handleClose}
+//           getContentAnchorEl={null}
+//           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+//           transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+//         >
+//           <MenuItem onClick={handleClose}>Option 1</MenuItem>
+//           <MenuItem onClick={handleClose}>Option 2</MenuItem>
+//           <MenuItem onClick={handleClose}>Option 3</MenuItem>
+//         </Menu>
+//         <Calendar>
+//           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+//             <Day key={day}>{day}</Day>
+//           ))}
+//           {Array.from({ length: daysInMonth }).map((_, index) => (
+//             <Day key={index + 7}>{index + 1}</Day>
+//           ))}
+//         </Calendar>
+//       </Square>
+//     </Container>
+//   );
+// };
+
+return (
+  <Container>
+    <GradientBackground />
+    <Square onClick={handleSquareClick}>
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'center',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'center',
+          horizontal: 'center',
+        }}
+      >
+        <Square
+          sx={{
+            width: '200px',
+            height: '200px',
+            backgroundColor: '#FFFFFF',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onClick={handleClose} // Close the pop-up when clicking inside the square
         >
-          <MenuItem onClick={handleClose}>Option 1</MenuItem>
-          <MenuItem onClick={handleClose}>Option 2</MenuItem>
-          <MenuItem onClick={handleClose}>Option 3</MenuItem>
-        </Menu>
-        <Calendar>
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-            <Day key={day}>{day}</Day>
-          ))}
-          {Array.from({ length: daysInMonth }).map((_, index) => (
-            <Day key={index + 7}>{index + 1}</Day>
-          ))}
-        </Calendar>
-      </Square>
-    </Container>
-  );
+          <Typography>Options</Typography>
+        </Square>
+      </Popover>
+      <Calendar>
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          <Day key={day}>{day}</Day>
+        ))}
+        {Array.from({ length: daysInMonth }).map((_, index) => (
+          <Day key={index + 7}>{index + 1}</Day>
+        ))}
+      </Calendar>
+    </Square>
+  </Container>
+);
 };
-
-
-const PopUpMenu = () => {
-  // Your pop-up menu component implementation goes here
-  return <div>Pop-up Menu</div>;
-};
-
 
 const Main = () => {
   return (
